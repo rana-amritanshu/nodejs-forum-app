@@ -1,0 +1,29 @@
+{
+  "name": "forum-app",
+  "version": "1.0.0",
+  "description": "Make teams and play against each other",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "nodemon src/index.ts",
+    "build": "tsc -p ."
+  },
+  "keywords": [
+    "forum",
+    "threads"
+  ],
+  "author": "Rana Amritanshu Kumar",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "typeorm": "^0.2.22"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.2",
+    "@types/node": "^13.7.0",
+    "nodemon": "^2.0.2",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
+  }
+}

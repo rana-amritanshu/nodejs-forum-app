@@ -2,7 +2,8 @@ import {Router} from 'express'
 
 const router: Router = Router()
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+    
     res.send(`Hello from forum`);
 });
 

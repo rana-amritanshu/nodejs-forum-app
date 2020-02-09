@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "nodemon src/index.ts",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "orm-init": "typeorm init"
   },
   "keywords": [
     "forum",
@@ -15,8 +16,12 @@
   "author": "Rana Amritanshu Kumar",
   "license": "ISC",
   "dependencies": {
+    "case": "^1.6.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "mysql2": "^2.1.0",
+    "pluralize": "^8.0.0",
+    "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.22"
   },
   "devDependencies": {

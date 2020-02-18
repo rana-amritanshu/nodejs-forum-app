@@ -1,14 +1,16 @@
-import {Router} from 'express'
-import {getRepository} from 'typeorm'
-import Users from '../../database/entities/Users';
+import moment from 'moment';
+import {Router, Request, Response} from 'express';
+import * as validations from './validations';
+import AuthController from './controllers/AuthController';
 
-const router: Router = Router()
+const router: Router = Router();
 
-router.get('/', async (req, res) => {
-    let userRepository = getRepository(Users);
-    let users = await userRepository.find();
-    
-    res.send(users);
+router.post('/register', validations.register, (req: Request, res: Response) => {
+    new AuthController(req, res).register();
+});
+
+router.post('/login', validations.login, (req: Request, res: Response) => {
+    new AuthController(req, res).login();
 });
 
 export {router};

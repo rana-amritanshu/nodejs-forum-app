@@ -30,7 +30,7 @@ class RefreshTokens {
         let refreshTokenExpiryTime = time.add(2, 'day').format("Y-M-D hh:mm:ss");
 
         this.user_token_id = userTokens.id;
-        this.token = createHash(refreshToken, 'md5');
+        this.token = createHash(refreshToken, 'sha256');
         this.created_at = date;
         this.expires_at = refreshTokenExpiryTime;
 

@@ -98,9 +98,10 @@ export default class AuthController {
         await transactionalEntityManager.save(refreshTokenEntity.data);
 
         this.response.send({
+            type: 'Bearer',
             access_token: userTokenEntity.accessToken,
-            refresh_token: refreshTokenEntity.refreshToken,
             access_token_expiry: userTokenEntity.accessTokenExpiryTime,
+            refresh_token: refreshTokenEntity.refreshToken,
             refresh_token_expiry: refreshTokenEntity.refreshTokenExpiryTime
         });
     }

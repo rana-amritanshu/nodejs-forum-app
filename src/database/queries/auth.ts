@@ -1,6 +1,7 @@
 import Users from '../entities/Users';
 import {getConnection} from 'typeorm';
 import AuthUser from '../models/AuthUser';
+import UserTokens from '../entities/UserTokens';
 
 export const getUserFromToken = async (userId: number, hashedToken: string): Promise<AuthUser> => {
     const user: AuthUser = await getConnection()

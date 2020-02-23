@@ -4,23 +4,17 @@ import Users from '../../../database/entities/Users';
 import UserTokens from '../../../database/entities/UserTokens';
 import RefreshTokens from '../../../database/entities/RefreshTokens';
 import { Request, Response } from 'express'
+import BaseController from '../../../helpers/BaseController';
 
-export default class AuthController {
-    request: Request;
-    response: Response;
-    constructor(request: Request, response: Response) {
-        this.request = request;
-        this.response = response;
-    }
-
+export default class AuthController extends BaseController {
     async register() {
         try {
-            const email = this.request.body.email;
+            const email: string = this.request.body.email;
 
             let user = new Users();
             let userRepository = getRepository(Users);
 
-            let findUser = await userRepository.findOne({
+            let findUser: Users = <Users>await userRepository.findOne({
                 where: {
                     email
                 }
@@ -33,7 +27,7 @@ export default class AuthController {
             } else {
                 await getManager().transaction(async transactionalEntityManager => {
                     const userEntity = await user.makeData(this.request);
-                    const savedUserData = await transactionalEntityManager.save(userEntity);
+                    const savedUserData: Users = await transactionalEntityManager.save(userEntity);
 
                     await this.saveSession(savedUserData, transactionalEntityManager);
                 });
@@ -53,7 +47,7 @@ export default class AuthController {
 
             let userRepository = getRepository(Users);
 
-            let user: any = await userRepository.findOne({
+            let user: Users = <Users>await userRepository.findOne({
                 where: {
                     email
                 }

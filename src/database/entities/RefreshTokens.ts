@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn} from "typeorm";
 import UserTokens from './UserTokens';
 import {getRandomBytes, createHash} from '../../utils/crypto';
 import moment from 'moment';
@@ -8,17 +8,21 @@ class RefreshTokens {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column('int')
+    @Column({type: 'int', unsigned: true})
     user_token_id!: number;
 
-    @Column('text')
+    @Column('varchar')
     token!: string;
 
     @Column({type: 'datetime'})
     created_at!: Date;
 
-    @Column({type: 'text'})
+    @Column({type: 'varchar'})
     expires_at!: string;
+
+    @OneToMany(type => UserTokens, refreshToken => refreshToken.refreshToken)
+    @JoinColumn({name: "user_token_id", referencedColumnName: "id"})
+    userToken!: Promise<UserTokens[]>;
 
     async makeData(userTokens: UserTokens)
     {

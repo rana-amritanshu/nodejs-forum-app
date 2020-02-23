@@ -7,7 +7,14 @@ let routes: AppRoutes = {};
 let items = fs.readdirSync(__dirname + '/app');
 
 items.forEach((dir: string) => {
-    let pluralDir = pluralize(dir);
+    let pluralDir: string = dir;
+    if (dir.match(/@/)) {
+        let temp: any = dir.split("@");
+        temp[0] = pluralize(temp[0]);
+        pluralDir = temp.reverse().join("/");
+    } else {
+        pluralDir = pluralize(dir);
+    }
     routes[pluralDir] = require(`./app/${dir}/routes`).router
 });
 

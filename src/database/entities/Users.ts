@@ -3,6 +3,7 @@ import {Request} from 'express'
 import argon2 from 'argon2'
 import UserTokens from "./UserTokens";
 import Topics from "./Topics";
+import Threads from "./Threads";
 
 @Entity()
 class Users {
@@ -12,7 +13,7 @@ class Users {
     @Column('varchar')
     name!: string;
 
-    @Column('varchar')
+    @Column({type: 'varchar', select: false})
     password!: string;
 
     @Column('varchar')
@@ -31,6 +32,10 @@ class Users {
     @OneToMany(type => Topics, topics => topics.user)
     @JoinColumn({name: "id", referencedColumnName: "user_id"})
     topics!: Promise<Topics[]>;
+
+    @OneToMany(type => Threads, threads => threads.user)
+    @JoinColumn({name: "id", referencedColumnName: "user_id"})
+    threads!: Promise<Threads[]>;
 
     public async makeData(request : Request)
     {

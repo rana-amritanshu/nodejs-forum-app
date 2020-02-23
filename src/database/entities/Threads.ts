@@ -1,16 +1,19 @@
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn} from "typeorm";
 import {Request} from 'express'
 import Users from "./Users";
 import { request } from "http";
-import Threads from "./Threads";
+import Topics from "./Topics";
 
 @Entity()
-class Topics {
+class Threads {
     @PrimaryGeneratedColumn()
     id!: number;
 
     @Column({type: 'int', unsigned: true, select: false})
     user_id!: number;
+
+    @Column({type: 'int', unsigned: true})
+    topic_id!: number;
     
     @Column('varchar')
     title!: string;
@@ -24,14 +27,14 @@ class Topics {
     @Column('datetime')
     updated_at!: Date;
 
-    @ManyToOne(type => Users, user => user.topics)
+    @ManyToOne(type => Users, user => user.threads)
     @JoinColumn({name: "user_id", referencedColumnName: "id"})
     user!: Promise<Users>
 
-    @OneToMany(type => Threads, threads => threads.user)
-    @JoinColumn({name: "id", referencedColumnName: "topic_id"})
-    threads!: Promise<Threads[]>;
+    @ManyToOne(type => Topics, topic => topic.threads)
+    @JoinColumn({name: "topic_id", referencedColumnName: "id"})
+    topic!: Promise<Topics>
 }
 
-export default Topics;
-export {Topics as entity};
+export default Threads;
+export {Threads as entity};

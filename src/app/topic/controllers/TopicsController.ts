@@ -13,8 +13,10 @@ export default class TopicsController extends BaseController
             const skip: number = (page - 1) * perPage;
             const topicRepository = getRepository(Topics);
             const topics: Topics[] = <Topics[]>await topicRepository.find({
+                relations: ["user"],
                 take: perPage + 1,
-                skip: skip
+                skip: skip,
+                order: {id: "DESC"}
             });
 
             if (!topics) {
@@ -51,7 +53,9 @@ export default class TopicsController extends BaseController
         try {
             const topicId: string = this.request.params.topicId;
             const topicRepository = getRepository(Topics);
-            const topic: Topics = <Topics>await topicRepository.findOne(topicId);
+            const topic: Topics = <Topics>await topicRepository.findOne(topicId, {
+                relations: ["user"]
+            });
 
             if (!topic) {
                 this.response.status(404).send({

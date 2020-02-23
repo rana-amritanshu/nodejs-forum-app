@@ -3,7 +3,7 @@ import { postTopic } from './validations';
 import { jwtAuth } from '../../helpers/auth';
 import TopicsController from './controllers/TopicsController';
 
-const router: Router = Router()
+const router: Router = Router({mergeParams: true});
 
 router.get('/', async (req, res) => {
     await new TopicsController(req, res).index();

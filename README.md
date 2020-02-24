@@ -10,6 +10,8 @@
 + cp .env-example .env
 + cd docker/dev
 + sudo docker-composer up
++ visit http://localhost:8080, username: forum, password: password
++ click forum database and then imports tab and import file **sql/forum.sql**
 
 without docker:  
 npm run dev

@@ -10,7 +10,12 @@ items.forEach((dir: string) => {
     let pluralDir: string = dir;
     if (dir.match(/@/)) {
         let temp: any = dir.split("@");
-        temp[0] = pluralize(temp[0]);
+        temp = temp.map((v: string) => {
+            if (! v.match(/:/)) {
+                v = pluralize(v);
+            }
+            return v;
+        });
         pluralDir = temp.reverse().join("/");
     } else {
         pluralDir = pluralize(dir);

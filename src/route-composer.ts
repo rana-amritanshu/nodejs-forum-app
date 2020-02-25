@@ -21,8 +21,8 @@ items.forEach((dir: string) => {
         pluralDir = pluralize(dir);
     }
     routes[pluralDir] = require(`./app/${dir}/routes`).router
-    console.log(routes);
 });
+console.log(routes);
 
 export default (app: Application): void => {
     for(let dir in routes) {

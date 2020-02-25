@@ -1,8 +1,9 @@
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany} from "typeorm";
 import {Request} from 'express'
 import Users from "./Users";
 import { request } from "http";
 import Topics from "./Topics";
+import Replies from "./Replies";
 
 @Entity()
 class Threads {
@@ -34,6 +35,10 @@ class Threads {
     @ManyToOne(type => Topics, topic => topic.threads)
     @JoinColumn({name: "topic_id", referencedColumnName: "id"})
     topic!: Promise<Topics>
+
+    @OneToMany(type => Replies, replies => replies.thread)
+    @JoinColumn({name: "id", referencedColumnName: "thread_id"})
+    replies!: Promise<Replies[]>;
 }
 
 export default Threads;

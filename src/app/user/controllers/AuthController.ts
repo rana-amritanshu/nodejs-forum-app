@@ -5,6 +5,7 @@ import UserTokens from '../../../database/entities/UserTokens';
 import RefreshTokens from '../../../database/entities/RefreshTokens';
 import { Request, Response } from 'express'
 import BaseController from '../../../helpers/BaseController';
+import { errorLogger } from '../../../utils/errorLogger';
 
 export default class AuthController extends BaseController {
     async register() {
@@ -34,6 +35,7 @@ export default class AuthController extends BaseController {
 
             }
         } catch (e) {
+            errorLogger("Register Error:", e);
             this.response.status(500).send({
                 message: 'Something went wrong'
             })
@@ -57,16 +59,17 @@ export default class AuthController extends BaseController {
                     message: `This email is not registered`
                 });
             } else {
-                this.createLoginSession(user);
+                this.createTokens(user);
             }
         } catch (e) {
+            errorLogger("Login Error:", e);
             this.response.status(500).send({
                 message: 'Something went wrong'
             });
         }
     }
 
-    private async createLoginSession(user: Users)
+    private async createTokens(user: Users)
     {
         try {
             let isValidPassword = await argon2.verify(user.password, this.request.body.password);
@@ -80,6 +83,7 @@ export default class AuthController extends BaseController {
                 });
             }
         } catch (e) {
+            errorLogger("Create Access Token:", e);
             throw new Error('Something went wrong');
         }
     }

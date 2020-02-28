@@ -32,7 +32,6 @@ export default class AuthController extends BaseController {
 
                     await this.saveSession(savedUserData, transactionalEntityManager);
                 });
-
             }
         } catch (e) {
             errorLogger("Register Error:", e);
@@ -73,6 +72,7 @@ export default class AuthController extends BaseController {
     {
         try {
             let isValidPassword = await argon2.verify(user.password, this.request.body.password);
+            console.log(isValidPassword);
             if (!isValidPassword) {
                 this.response.status(400).send({
                     message: 'Please enter a valid password'
@@ -84,7 +84,9 @@ export default class AuthController extends BaseController {
             }
         } catch (e) {
             errorLogger("Create Access Token:", e);
-            throw new Error('Something went wrong');
+            this.response.status(500).send({
+                message: 'something went wrong'
+            });
         }
     }
 

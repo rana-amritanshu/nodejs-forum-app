@@ -23,7 +23,6 @@ items.forEach((dir: string) => {
     routes[pluralDir] = require(`./app/${dir}/routes`).router
 });
 console.log(routes);
-
 export default (app: Application): void => {
     for(let dir in routes) {
         app.use(`/api/${dir}`, routes[dir]);

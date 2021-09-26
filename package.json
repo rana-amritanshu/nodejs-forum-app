@@ -19,7 +19,7 @@
   "dependencies": {
     "@types/jsonwebtoken": "^8.3.7",
     "@types/validator": "^12.0.1",
-    "argon2": "^0.25.1",
+    "argon2": "^0.28.2",
     "body-parser": "^1.19.0",
     "case": "^1.6.2",
     "dotenv": "^8.2.0",
@@ -32,7 +32,7 @@
     "passport-jwt": "^4.0.0",
     "pluralize": "^8.0.0",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.2.22",
+    "typeorm": "^0.2.37",
     "validator": "^12.2.0"
   },
   "devDependencies": {
